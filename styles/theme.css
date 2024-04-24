@@ -190,6 +190,9 @@
   .shadow-light100_darknone {
     @apply shadow-light-100 dark:shadow-none;
   }
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-[#ff7000] to-[#e2995f] bg-clip-text text-transparent;
+  }
 
   .primary-gradient {
     background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
