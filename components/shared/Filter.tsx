@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import {
   Select,
@@ -25,15 +26,20 @@ const Filter = ({ filters, className, containerClass }: FilterProps) => {
       <Select>
         <SelectTrigger
           className={`${className} body-regular light-border background-light800_dark300 text-dark500_light700 border px-5 py-2.5`}
+          onChange={() => console.log("chnaged")}
         >
           <div className="line-clamp-1">
-            <SelectValue placeholder="Theme" />
+            <SelectValue placeholder="Select a Filter" />
           </div>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             {filters.map((filter) => (
-              <SelectItem value={filter.value} key={filter.value}>
+              <SelectItem
+                value={filter.value}
+                key={filter.value}
+                onChange={() => console.log("select")}
+              >
                 {filter.name}
               </SelectItem>
             ))}
