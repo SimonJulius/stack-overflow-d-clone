@@ -83,7 +83,7 @@ const LeftSidebar = ({ className }: LeftSidebarProps) => {
       </SignedOut>
       <SignedIn>
         <SignOutButton>
-          <div className="flex gap-4 p-4">
+          <div className="flex cursor-pointer gap-4 p-4">
             <Image
               src="assets/icons/logout.svg"
               width={20}
