@@ -89,6 +89,7 @@ const LeftSidebar = ({ className }: LeftSidebarProps) => {
               width={20}
               height={20}
               alt="logout"
+              className="invert-colors"
             />
             <p className="base-medium text-dark300_light900 max-lg:hidden">
               Log Out
