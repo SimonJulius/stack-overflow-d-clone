@@ -2,6 +2,7 @@
 
 import { connectToDatabase, connected } from "../database";
 import { User } from "../models/user";
+import { GetUserByIdParams } from "./shared.type";
 
 // export const createUser = async (params) => {
 //   try {
@@ -45,7 +46,7 @@ import { User } from "../models/user";
 //   }
 // };
 
-export const getUserById = async (params) => {
+export const getUserById = async (params: GetUserByIdParams) => {
   try {
     if (!connected) {
       await connectToDatabase();

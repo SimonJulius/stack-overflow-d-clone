@@ -1,3 +1,6 @@
+import { Types } from "mongoose";
+import { IUser } from "../models/user";
+
 export interface GetQuestionsParams {
   page?: number;
   pageSize?: number;
@@ -9,6 +12,9 @@ export interface CreateQuestionParams {
   title: string;
   content: string;
   tags: string[];
-  author: string;
+  author: Types.ObjectId | IUser;
   path: string;
+}
+export interface GetUserByIdParams {
+  userId: string;
 }
