@@ -7,7 +7,7 @@ import { formatNumber, getTimestamp } from "@/lib/utils";
 // import Image from "next/image";
 
 interface QuestionCardProps {
-  _id: number;
+  _id: string;
   title: string;
   tags: { _id: string; name: string }[];
 
