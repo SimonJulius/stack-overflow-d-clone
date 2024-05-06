@@ -19,7 +19,13 @@ export const createUser = async (userData: CreateUserParams) => {
 
     const { clerkId, name, username, picture, email } = userData;
 
-    const newUser = User.create({ clerkId, name, username, picture, email });
+    const newUser = await User.create({
+      clerkId,
+      name,
+      username,
+      picture,
+      email,
+    });
     return newUser;
   } catch (error) {
     console.error(error);
