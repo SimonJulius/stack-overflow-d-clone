@@ -66,6 +66,7 @@ export async function POST(req: Request) {
       picture: image_url,
       email: email_addresses[0].email_address,
       username: username || "",
+      reputation: 0,
     };
     const mongoUser = await createUser(userInfo);
 
