@@ -29,7 +29,7 @@ const MetricContents = ({
         alt={alt}
         height={16}
         width={16}
-        className={`object-contain ${href ? "rounded-full" : ""}`}
+        className={`mr-1 rounded-full object-contain ${href ? "rounded-full" : ""}`}
       />
       <p className={`flex items-center gap-1 ${textStyle}`}>
         {value}
