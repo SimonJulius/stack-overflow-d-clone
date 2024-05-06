@@ -20,13 +20,20 @@ import { Input } from "@/components/ui/input";
 import { QuestionSchema } from "@/lib/validations";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { createQuestion } from "@/lib/actions/question.action";
+// eslint-disable-next-line spaced-comment
+import { /**usePathname, **/ usePathname, useRouter } from "next/navigation";
 
-// interface QuestionProps {}
+interface QuestionProps {
+  mongoUserId: string;
+}
 
 const type: string = "create";
 
-const Question = () => {
+const Question = ({ mongoUserId }: QuestionProps) => {
   const editorRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
   const [submitting, setSubmitting] = useState(false);
 
   // 1. Define your form.
@@ -40,11 +47,19 @@ const Question = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof QuestionSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionSchema>) {
     setSubmitting(true);
-
     try {
-      console.log(values);
+      const question = {
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+        path: pathname,
+      };
+
+      await createQuestion(question);
+      router.push("/");
     } catch (error) {
     } finally {
       setSubmitting(false);
@@ -138,6 +153,8 @@ const Question = () => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
