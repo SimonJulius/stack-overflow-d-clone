@@ -1,50 +1,74 @@
 "use server";
 
+import {
+  CreateUserParams,
+  DeleteUserParams,
+  UpdateUserParams,
+} from "@/types/server.type";
 import { connectToDatabase, connected } from "../database";
 import { User } from "../models/user";
 import { GetUserByIdParams } from "./shared.type";
+import { revalidatePath } from "next/cache";
+import { Question } from "../models/question";
 
-// export const createUser = async (params) => {
-//   try {
-//     // Server code here
-//     if (!connected) {
-//       await connectToDatabase();
-//     }
+export const createUser = async (userData: CreateUserParams) => {
+  try {
+    if (!connected) {
+      await connectToDatabase();
+    }
 
-//     const { title, content, tags, author, path } = params;
+    const { clerkId, name, username, picture, email } = userData;
 
-//     // Let's create question
+    const newUser = User.create({ clerkId, name, username, picture, email });
+    return newUser;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-//     const question = await QuestionModel.create({
-//       title,
-//       content,
-//       author,
-//     });
+export const updateUser = async (userData: UpdateUserParams) => {
+  try {
+    if (!connected) {
+      await connectToDatabase();
+    }
+    await User.findOneAndUpdate(
+      { clerkId: userData.clerkId },
+      userData.updateData,
+      {
+        new: true,
+      }
+    );
+    revalidatePath(userData.path);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-//     // Let's get tags id
-//     const tagDocuments = [];
+export const deleteUser = async (userData: DeleteUserParams) => {
+  try {
+    if (!connected) {
+      await connectToDatabase();
+    }
 
-//     for (const tag of tags) {
-//       const existingTag = await TagModel.findOneAndUpdate(
-//         {
-//           name: { $regex: new RegExp(`^${tag}$`, "i") },
-//         },
-//         {
-//           $setOnInsert: { name: tag },
-//           $push: { question: question._id },
-//         },
-//         {
-//           upsert: true,
-//           new: true,
-//         }
-//       );
+    const user = await User.findOne({ clerkId: userData.clerkId });
 
-//       tagDocuments.push(existingTag._id);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // TODO: delete every of the user's past interactions with the app.
+
+    // Questions
+    // const userQuestionIds = await Question.find({author: user._id}).distinct('_id')
+
+    await Question.deleteMany({ author: user._id });
+
+    const deletedUser = await User.findByIdAndDelete({ _id: user._id });
+    return deletedUser;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const getUserById = async (params: GetUserByIdParams) => {
   try {

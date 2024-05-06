@@ -11,7 +11,7 @@ import React from "react";
 
 const page = async () => {
   const result = await getQuestions({});
-  console.log("author: ", result?.questions[0].author._id);
+  console.log("author: ", result?.questions[0]?.author._id);
   return (
     <>
       <section
