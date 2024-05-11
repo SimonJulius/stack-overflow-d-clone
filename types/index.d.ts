@@ -1,4 +1,3 @@
-
 import { BADGE_CRITERIA } from "@/constants";
 
 export interface SidebarLink {
@@ -49,8 +48,15 @@ export interface BadgeCounts {
 export type BadgeCriteriaType = keyof typeof BADGE_CRITERIA;
 
 export interface ThemeInterface {
-   value: "light" | "dark" | "system"
-  label: "Light" | "Dark" | "System"
-  icon: string 
+  value: "light" | "dark" | "system";
+  label: "Light" | "Dark" | "System";
+  icon: string;
 }
- 
+
+export interface UserInterface {
+  _id: string;
+  clerkId: string;
+  picture: string;
+  name: string;
+  username: string;
+}

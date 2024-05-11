@@ -7,7 +7,6 @@ export const connectToDatabase = async () => {
   if (!process.env.MONGODB_URI) return console.log("Missing connection string");
   if (connected) return console.log("Database already connected");
 
-  console.log("MONGODB_URI: ", process.env.MONGODB_URI);
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
       dbName: "devflow",

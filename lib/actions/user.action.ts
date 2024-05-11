@@ -3,6 +3,7 @@
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams,
 } from "@/types/server.type";
 import { connectToDatabase, connected } from "../database";
@@ -84,6 +85,21 @@ export const getUserById = async (params: GetUserByIdParams) => {
     const { userId } = params;
     const user = User.findOne({ clerkId: userId });
     return user;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUsers = async (params: GetAllUsersParams) => {
+  try {
+    if (!connected) {
+      await connectToDatabase();
+    }
+    // const {page = 1, pageSize = 20, filter, searchQuery } = params
+
+    const users = await User.find({}).sort({ createdAt: -1 });
+
+    return { users };
   } catch (error) {
     console.error(error);
   }
