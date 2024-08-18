@@ -15,7 +15,7 @@ const Page = async () => {
     <>
       <section
         className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center"
-        aria-label="all questions"
+        aria-label="all users"
       >
         <h1 className="h1-bold text-dark100_light900">All Users</h1>
       </section>
@@ -23,7 +23,7 @@ const Page = async () => {
         <LocalSearchbar
           route="/community"
           imgSrc="/assets/icons/search.svg"
-          placeholder="Search for Questions Here..."
+          placeholder="Search for User Here..."
           iconPosition="left"
           className="flex-1"
         />

@@ -18,3 +18,6 @@ export interface CreateQuestionParams {
 export interface GetUserByIdParams {
   userId: string;
 }
+export interface GetQuestionByIdParams {
+  questionId: string;
+}

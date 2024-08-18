@@ -52,11 +52,15 @@ export interface ThemeInterface {
   label: "Light" | "Dark" | "System";
   icon: string;
 }
-
 export interface UserInterface {
   _id: string;
   clerkId: string;
   picture: string;
   name: string;
   username: string;
+}
+export interface TagInterface {
+  _id: string;
+  name: string;
+  questions: Array<string>;
 }

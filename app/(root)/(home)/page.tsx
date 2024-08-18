@@ -43,9 +43,9 @@ const page = async () => {
       </section>
       <section aria-label="questions">
         {result && result.questions.length ? (
-          result.questions.map((question, index) => (
+          result.questions.map((question) => (
             <QuestionCard
-              _id={JSON.stringify(question._id)}
+              _id={question._id}
               key={question._id}
               title={question.title}
               tags={JSON.parse(JSON.stringify(question.tags))}

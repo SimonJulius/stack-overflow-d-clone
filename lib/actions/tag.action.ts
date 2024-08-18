@@ -1,6 +1,9 @@
 "use server";
 
-import { GetTopInteractedTagsParams } from "@/types/server.type";
+import {
+  GetAllTagsParams,
+  GetTopInteractedTagsParams,
+} from "@/types/server.type";
 import { connectToDatabase, connected } from "../database";
 import { ITag, Tag } from "../models/tag";
 import { User } from "../models/user";
@@ -40,5 +43,20 @@ export const getTopInteractedTags = async (
     ];
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getAllTags = async (params: GetAllTagsParams) => {
+  try {
+    if (!connected) {
+      await connectToDatabase();
+    }
+
+    const tags = await Tag.find(params);
+
+    return { tags };
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };

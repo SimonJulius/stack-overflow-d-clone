@@ -5,23 +5,11 @@ import { connectToDatabase, connected } from "../database";
 import { Question } from "../models/question";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
-import { CreateQuestionParams, GetQuestionsParams } from "./shared.type";
-
-export const getQuestions = async (params: GetQuestionsParams) => {
-  try {
-    if (!connected) {
-      await connectToDatabase();
-    }
-
-    const questions = await Question.find(params)
-      .populate({ path: "tags", model: Tag })
-      .populate({ path: "author", model: User })
-      .sort({ createdAt: -1 });
-    return { questions };
-  } catch (error) {
-    console.error(error);
-  }
-};
+import {
+  CreateQuestionParams,
+  GetQuestionByIdParams,
+  GetQuestionsParams,
+} from "./shared.type";
 
 export const createQuestion = async (params: CreateQuestionParams) => {
   try {
@@ -66,6 +54,44 @@ export const createQuestion = async (params: CreateQuestionParams) => {
     });
 
     revalidatePath(path);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getQuestions = async (params: GetQuestionsParams) => {
+  try {
+    if (!connected) {
+      await connectToDatabase();
+    }
+
+    const questions = await Question.find(params)
+      .populate({ path: "tags", model: Tag })
+      .populate({ path: "author", model: User })
+      .sort({ createdAt: -1 });
+    return { questions };
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const getQuestionsById = async (params: GetQuestionByIdParams) => {
+  try {
+    if (!connected) {
+      await connectToDatabase();
+    }
+    const { questionId } = params;
+    const question = await Question.findById(questionId)
+      .populate({
+        path: "tags",
+        model: Tag,
+        select: `_id name`,
+      })
+      .populate({
+        path: "author",
+        model: User,
+        select: `_id clerkId name picture`,
+      });
+    return question;
   } catch (error) {
     console.error(error);
   }
